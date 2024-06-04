@@ -1,0 +1,118 @@
+@model List<Song>
+@{
+    ViewData["Title"] = "Canciones";
+    ViewData["SubTitle"] = "Listado";
+}
+
+<h2 class="text-center mb-3">@ViewData["Title"] <small class="text-muted fs-5">@ViewData["SubTitle"]</small></h2>
+<div class="row small">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <form asp-action="Index" method="get">
+            <div class="input-group input-group-sm mb-3">
+                <input name="s" id="s" value="@ViewBag.search" maxlength="75" type="search" class="form-control"
+                    placeholder="Buscar por nombre">
+                <button class="btn " style="background-color: #c6a0ee;" type="submit" title="Buscar"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row small mb-3">
+    <div class="col">
+        @if (ViewBag.SoloAdmin == true)
+        {
+            <a class="text-decoration-none" asp-action="Create" title="Crear nuevo">Crear nueva</a>
+        }
+    </div>
+    <div class="col text-end">
+        Mostrando @Model.Count() elementos
+    </div>
+</div>
+@if (Model.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered small">
+            <thead class="text-center">
+                <tr>
+                    <th width="1">
+                        @Html.DisplayNameFor(model => model.First().SongId)
+                    </th>
+                    <th width="3">
+                        @Html.DisplayNameFor(model => model.First().FileId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Artist)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Album)
+                    </th>
+                    <th></th>
+                    @if (ViewBag.SoloAdmin == true)
+                    {
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SongId)
+                        </td>
+                        <td class="text-center" width="1">
+                            <img src='@((item.FileId == null) ? "https://via.placeholder.com/27x40" : $"{ViewBag.Url}/api/file/{item.FileId}")'
+                                alt="@item.Title" class="img-fluid img-thumbnail" style="max-height: 90px;">
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)<br />
+                            <br />
+                          @foreach (var cat in item.MusicGenres!)
+                            {
+                                <span class="badge rounded-pill text-black bg-success" >@cat.Name</span>
+                            }
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Artist)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Album)
+                        </td>
+                        <td width="1">
+                            <a class="text-decoration-none small text-uppercase" style="color: #c6a0ee;" asp-action="Detail"
+                                asp-route-id="@item.SongId">Detalle</a>
+                        </td>
+                        @if (ViewBag.SoloAdmin == true)
+                        {
+                            <td width="1">
+                                <a class="text-decoration-none small text-uppercase " style="color: #c6a0ee;" asp-action="MusicGenres"
+                                    asp-route-id="@item.SongId">Géneros</a>
+                            </td>
+                            <td width="1">
+                                <a class="text-decoration-none small text-uppercase " style="color: #c6a0ee;"  asp-action="Edit"
+                                    asp-route-id="@item.SongId">Editar</a>
+                            </td>
+                            <td width="1">
+                                <a class="text-decoration-none small text-uppercase " style="color: #c6a0ee;"  asp-action="Delete"
+                                    asp-route-id="@item.SongId">Eliminar</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="mt-5">
+        <div class="alert alert-warning" role="alert">
+            No se han encontrado elementos. Inténtelo de nuevo más tarde.
+        </div>
+    </div>
+}

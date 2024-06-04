@@ -1,0 +1,55 @@
+@model List<MusicGenre>
+
+<div class="row small mb-3">
+    <div class="col">
+        <a class="text-decoration-none" asp-action="AddMusicGenres" asp-route-id='@ViewData["SongId"]'
+            title="Agregar">Agregar</a>
+    </div>
+    <div class="col text-end">
+        Mostrando @Model.Count() elementos
+    </div>
+</div>
+
+@if (Model.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered small">
+            <thead class="text-center">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().MusicGenreId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Name)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MusicGenreId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td width="1">
+                            <a class="text-decoration-none small text-uppercase" asp-action="RemoveMusicGenres"
+                                asp-route-id='@ViewData["SongId"]' asp-route-idMusicGenre="@item.MusicGenreId">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="mt-5">
+        <div class="alert alert-warning small" role="alert">
+            No se han encontrado elementos.
+        </div>
+    </div>
+}

@@ -1,0 +1,36 @@
+@model Song
+
+<div class="card mt-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src='@((Model.FileId == null) ? "https://via.placeholder.com/300x450" : $"{ViewBag.Url}/api/file/{Model.FileId}")'
+                alt="@Model.Title" class="image img-fluid img-thumbnail" data-url="@ViewBag.Url"
+                style="max-height: 460px;">
+                
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <div class="mb-3 ps-3">
+                    <label asp-for="SongId" class="form-label form-text"></label>
+                    <div class="form-text text-body">@Model.SongId</div>
+                </div>
+                <div class="mb-3 ps-3">
+                    <label asp-for="Title" class="form-label form-text"></label>
+                    <div class="form-text text-body">@Model.Title</div>
+                </div>
+                <div class="mb-3 ps-3">
+                    <label asp-for="Artist" class="form-label form-text"></label>
+                    <div class="form-text text-body">@Model.Artist</div>
+                </div>
+                <div class="mb-3 ps-3">
+                    <label asp-for="Album" class="form-label form-text"></label>
+                    <div class="form-text text-body">@Model.Album</div>
+                </div>
+                <div class="mb-3 ps-3">
+                    <label asp-for="Duration" class="form-label form-text"></label>
+                    <div class="form-text text-body">@Model.Duration</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

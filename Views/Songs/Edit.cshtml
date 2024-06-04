@@ -1,0 +1,69 @@
+@model Song
+@{
+    ViewData["Title"] = "Canciones";
+    ViewData["SubTitle"] = "Editar";
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/song_image.js"></script>
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb small">
+        <li class="breadcrumb-item"><a class="text-decoration-none" title="Regresar al listado"
+                asp-action="Index">Listado</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["SubTitle"]</li>
+    </ol>
+</nav>
+
+<h2 class="text-center mb-3">@ViewData["Title"] <small class="text-muted fs-5">@ViewData["SubTitle"]</small></h2>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="card mt-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src='@((Model.FileId == null) ? "https://via.placeholder.com/300x450" : $"{ViewBag.Url}/api/file/{Model.FileId}")'
+                    alt="@Model.Title" class="image img-fluid img-thumbnail" data-url="@ViewBag.Url" style="max-height: 490px;">
+
+                    
+            </div>
+            <div class="col-md-8">
+                <div class="card-body small">
+                    <div class="form-floating mb-3">
+                        <input asp-for="SongId" placeholder="Id" readonly class="form-control-plaintext" />
+                        <label asp-for="SongId" class="form-label"></label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Title" placeholder="Nombre" class="form-control" maxlength="75"/>
+                        <label asp-for="Title" class="form-label"></label>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Artist" placeholder="Nombre" class="form-control" maxlength="75" />
+                        <label asp-for="Artist" class="form-label"></label>
+                        <span asp-validation-for="Artist" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Duration" placeholder="Nombre" class="form-control" maxlength="8" />
+                        <label asp-for="Duration" class="form-label"></label>
+                        <span asp-validation-for="Duration" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Album" placeholder="Álbum" maxlength="75" class="form-control form-control-sm"
+                            style="height: 100px"></textarea>
+                        <label asp-for="Album" class="form-label"></label>
+                        <span asp-validation-for="Album" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <button id="btnEnviar" type="submit" class="btn btn-sm btn-success">Guardar</button>
+        <a class="btn btn-sm btn-outline-secondary" asp-action="Index" title="Cancelar">Cancelar</a>
+    </div>
+</form>

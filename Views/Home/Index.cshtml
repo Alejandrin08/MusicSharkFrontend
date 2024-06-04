@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Página principal";
+}
+
+<div class="fondo h-100">
+    <div class="card text-center bg-transparent border-0">
+        <h1 class="card-header bg-transparent border-0" style="color: #c6a0ee;">MusicShark</h1>
+        <div class="card-body">
+            <h2 class="display-5 card-title">Tu destino para explorar y disfrutar de la música</h2>
+            <p class="card-text lead fw-semibold">Disfruta donde quieras. Cancela cuando quieras.</p>
+            <p class="card-text lead">Presiona el siguiente botón para descubrir un océano de melodías con MusicShark.</p>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Songs" class="btn btn-success">Ver la lista de canciones</a>
+            }
+            else
+            {
+                <a asp-controller="Auth" class="btn btn-success">Comenzar</a>
+            }
+        </div>
+    </div>
+</div>
